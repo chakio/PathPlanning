@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import os
 import sys
-
+import time
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
                 "/../../Sampling_based_Planning/")
 
@@ -15,9 +15,9 @@ from Sampling_based_Planning.rrt_2D import env
 
 
 class Plotting:
-    def __init__(self, x_start, x_goal):
+    def __init__(self, x_start, x_goal, env):
         self.xI, self.xG = x_start, x_goal
-        self.env = env.Env()
+        self.env = env
         self.obs_bound = self.env.obs_boundary
         self.obs_circle = self.env.obs_circle
         self.obs_rectangle = self.env.obs_rectangle
@@ -25,12 +25,24 @@ class Plotting:
     def animation(self, nodelist, path, name, animation=False):
         self.plot_grid(name)
         self.plot_visited(nodelist, animation)
-        self.plot_path(path)
+        # self.plot_path(path)
+
+        now = time.localtime()
+        d = time.strftime('%Y_%m_%d_%H_%M_%S.png', now) 
+        print(d)
+        plt.savefig(d,transparent=True, dpi=500)
+        # plt.show()
 
     def animation_connect(self, V1, V2, path, name):
         self.plot_grid(name)
         self.plot_visited_connect(V1, V2)
-        self.plot_path(path)
+        # self.plot_path(path)
+        now = time.localtime()
+        d = time.strftime('%Y_%m_%d_%H_%M_%S.png', now) 
+        print(d)
+        plt.savefig(d,transparent=True)
+        
+        # plt.show()
 
     def plot_grid(self, name):
         fig, ax = plt.subplots()
@@ -65,8 +77,8 @@ class Plotting:
                 )
             )
 
-        plt.plot(self.xI[0], self.xI[1], "bs", linewidth=3)
-        plt.plot(self.xG[0], self.xG[1], "gs", linewidth=3)
+        plt.plot(self.xI[0], self.xI[1], "bs", linewidth=2)
+        plt.plot(self.xG[0], self.xG[1], "gs", linewidth=2)
 
         plt.title(name)
         plt.axis("equal")
@@ -78,7 +90,7 @@ class Plotting:
             for node in nodelist:
                 count += 1
                 if node.parent:
-                    plt.plot([node.parent.x, node.x], [node.parent.y, node.y], "-g")
+                    plt.plot([node.parent.x, node.x], [node.parent.y, node.y], "-b", linewidth=0.5)
                     plt.gcf().canvas.mpl_connect('key_release_event',
                                                  lambda event:
                                                  [exit(0) if event.key == 'escape' else None])
@@ -87,7 +99,7 @@ class Plotting:
         else:
             for node in nodelist:
                 if node.parent:
-                    plt.plot([node.parent.x, node.x], [node.parent.y, node.y], "-g")
+                    plt.plot([node.parent.x, node.x], [node.parent.y, node.y], "-b", linewidth=0.5)
 
     @staticmethod
     def plot_visited_connect(V1, V2):
@@ -96,10 +108,10 @@ class Plotting:
         for k in range(max(len1, len2)):
             if k < len1:
                 if V1[k].parent:
-                    plt.plot([V1[k].x, V1[k].parent.x], [V1[k].y, V1[k].parent.y], "-g")
+                    plt.plot([V1[k].x, V1[k].parent.x], [V1[k].y, V1[k].parent.y], "-b", linewidth=0.5)
             if k < len2:
                 if V2[k].parent:
-                    plt.plot([V2[k].x, V2[k].parent.x], [V2[k].y, V2[k].parent.y], "-g")
+                    plt.plot([V2[k].x, V2[k].parent.x], [V2[k].y, V2[k].parent.y], "-b", linewidth=0.5)
 
             plt.gcf().canvas.mpl_connect('key_release_event',
                                          lambda event: [exit(0) if event.key == 'escape' else None])

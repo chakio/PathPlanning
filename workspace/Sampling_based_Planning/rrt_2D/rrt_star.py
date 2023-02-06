@@ -8,9 +8,9 @@ import sys
 import math
 import numpy as np
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
-                "/../../Sampling_based_Planning/")
-
+path = os.path.dirname(os.path.abspath(__file__)) + "/../../"
+sys.path.append(path)
+print(path)
 from Sampling_based_Planning.rrt_2D import env, plotting, utils, queue
 
 
@@ -34,8 +34,8 @@ class RrtStar:
         self.path = []
 
         self.env = env.Env()
-        self.plotting = plotting.Plotting(x_start, x_goal)
-        self.utils = utils.Utils()
+        self.plotting = plotting.Plotting(x_start, x_goal, self.env)
+        self.utils = utils.Utils(self.env)
 
         self.x_range = self.env.x_range
         self.y_range = self.env.y_range
@@ -60,8 +60,8 @@ class RrtStar:
                     self.choose_parent(node_new, neighbor_index)
                     self.rewire(node_new, neighbor_index)
 
-        index = self.search_goal_parent()
-        self.path = self.extract_path(self.vertex[index])
+        # index = self.search_goal_parent()
+        # self.path = self.extract_path(self.vertex[index])
 
         self.plotting.animation(self.vertex, self.path, "rrt*, N = " + str(self.iter_max))
 
@@ -173,11 +173,12 @@ class RrtStar:
 
 
 def main():
-    x_start = (18, 8)  # Starting node
-    x_goal = (37, 18)  # Goal node
+    for i in range(10):
+        x_start = (25, 4)  # Starting node
+        x_goal = (42, 22)  # Goal node
 
-    rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 10000)
-    rrt_star.planning()
+        rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 9500)
+        rrt_star.planning()
 
 
 if __name__ == '__main__':
