@@ -7,10 +7,11 @@ import os
 import sys
 import math
 import numpy as np
+import random
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) +
-                "/../../Sampling_based_Planning/")
-
+path = os.path.dirname(os.path.abspath(__file__)) + "/../../"
+sys.path.append(path)
+print(path)
 from Sampling_based_Planning.rrt_2D import env, plotting, utils
 
 
@@ -31,8 +32,8 @@ class Rrt:
         self.vertex = [self.s_start]
 
         self.env = env.Env()
-        self.plotting = plotting.Plotting(s_start, s_goal)
-        self.utils = utils.Utils()
+        self.plotting = plotting.Plotting(s_start, s_goal, self.env)
+        self.utils = utils.Utils(self.env)
 
         self.x_range = self.env.x_range
         self.y_range = self.env.y_range
@@ -98,10 +99,11 @@ class Rrt:
 
 
 def main():
-    x_start = (2, 2)  # Starting node
-    x_goal = (49, 24)  # Goal node
+    x_start = (25, 2)  # Starting node
+    # x_goal = (49, 24)  # Goal node
+    x_goal = (random.uniform(5, 45), random.uniform(10, 25))
 
-    rrt = Rrt(x_start, x_goal, 0.5, 0.05, 10000)
+    rrt = Rrt(x_start, x_goal, 0.4, 0.2, 3000)
     path = rrt.planning()
 
     if path:

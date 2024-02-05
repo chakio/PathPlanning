@@ -174,10 +174,10 @@ class RrtStar:
 
 def main():
     for i in range(10):
-        x_start = (25, 4)  # Starting node
+        x_start = (25, 28)  # Starting node
         x_goal = (42, 22)  # Goal node
 
-        rrt_star = RrtStar(x_start, x_goal, 10, 0.10, 20, 9500)
+        rrt_star = RrtStar(x_start, x_goal, 30, 0.30, 20, 9500)
         rrt_star.planning()
 
 

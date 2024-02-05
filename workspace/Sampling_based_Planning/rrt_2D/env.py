@@ -26,13 +26,18 @@ class Env:
     @staticmethod
     def obs_rectangle():
         # obs_rectangle = [
-        #     [14, 12, 8, 2],
-        #     [27, 7, 10, 2]
+        #     [10, 12, 5, 5],
+        #     [27, 7, 3, 2],
+        #     [20, 25, 6, 4],
+        #     [35, 15, 3, 4]
         # ]
         obs_rectangle = [
             [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 10), random.uniform(1, 10)],
             [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 10), random.uniform(1, 10)]
         ]
+        # obs_rectangle = [
+        #     [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 10), random.uniform(1, 10)]
+        # ]
         
         # obs_rectangle = []
         return obs_rectangle
@@ -48,6 +53,9 @@ class Env:
             [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 7)],
             [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 7)]
         ]
+        # obs_cir = [
+        #     [random.uniform(10, 40), random.uniform(10, 20), random.uniform(1, 7)]
+        # ]
         # obs_cir = []
 
         return obs_cir
